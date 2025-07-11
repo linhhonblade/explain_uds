@@ -24,7 +24,7 @@ Inspired from [explainshell.com](explainshell.com) but here I explain UDS messag
 - UDS Parser: homegrown tool
 - CLI Syntax:
   - default: `explainuds "SID SUB-FUNCTION PARAMS"`
-  - example: `explainuds "22 01 01"`
+  - example: `explainuds 0x22 0x01 0x01`
 
 # UDS Parser
 

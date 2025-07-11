@@ -4,6 +4,9 @@ import (
 	"context"
 	"database/sql"
 	uds "explain_uds/common"
+	"explain_uds/module/uds_parser"
+	"fmt"
+	_ "github.com/mattn/go-sqlite3" // Import the SQLite driver
 	"github.com/spf13/cobra"
 	"log"
 )
@@ -16,7 +19,7 @@ var rootCmd = &cobra.Command{
 		// For now, we can just print a message.
 		// Init db connection
 		// TODO: Abstract the database connection logic
-		db, err := sql.Open("sqlite3", "./sqlite3/uds.db")
+		db, err := sql.Open("sqlite3", "./repo/sqlite3/uds.db")
 		if err != nil {
 			log.Fatalf("cannot open DB: %v", err)
 		}
@@ -27,6 +30,11 @@ var rootCmd = &cobra.Command{
 		ctx = context.WithValue(ctx, uds.CtxKeyDB{}, db)
 
 		println("Explain UDS (Unified Diagnostic Service) in Go.")
+		res, err := uds_parser.ParseUDS(ctx, args) // Example raw message
+		if err != nil {
+			log.Fatalf("Error parsing UDS: %v", err)
+		}
+		fmt.Print(res.String())
 	},
 }
 
