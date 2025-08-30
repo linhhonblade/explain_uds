@@ -59,3 +59,19 @@ func GetSubfunctionByServiceID(ctx context.Context, serviceID string) ([]Subfunc
 
 	return res, nil
 }
+
+func GetSubfunctionByID(ctx context.Context, serviceID, subFunctionID string) (*SubfunctionDTO, error) {
+	db := getDB(ctx)
+	var dto SubfunctionDTO
+
+	row := db.QueryRow(`select value, name, sid, description from sub_functions where sid = ? and value = ?`, serviceID, subFunctionID)
+	err := row.Scan(&dto.Value, &dto.Name, &dto.SID, &dto.Description)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			// If no rows are found, return nil and no error
+			return nil, nil
+		}
+		return nil, err
+	}
+	return &dto, nil
+}

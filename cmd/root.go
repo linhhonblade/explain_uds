@@ -13,7 +13,7 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:   "explainuds",
-	Short: "Explain UDS (Unix Domain Sockets) in Go",
+	Short: "Explain UDS (Unified Diagnostic Service) in Go",
 	Run: func(cmd *cobra.Command, args []string) {
 		// This is where you would implement the functionality to explain UDS.
 		// For now, we can just print a message.

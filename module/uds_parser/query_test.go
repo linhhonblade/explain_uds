@@ -81,4 +81,24 @@ func TestGetServiceById(t *testing.T) {
 
 }
 
-func TestGetSubfunctionById(t *testing.T) {}
+func TestGetSubfunctionById(t *testing.T) {
+	t.Run("Valid Sub function ID", func(t *testing.T) {
+		dto, err := GetSubfunctionByID(testCtx, "0x10", "0x01")
+		if err != nil {
+			t.Fatalf("GetSubfunctionByID failed: %v", err)
+		}
+
+		if dto.Value != "0x01" {
+			t.Errorf("Found subfunction mismatch: %v", dto.Value)
+		}
+	})
+	t.Run("Invalid Sub function ID", func(t *testing.T) {
+		dto, err := GetSubfunctionByID(testCtx, "0x10", "0x99")
+		if err != nil {
+			t.Fatalf("GetSubfunctionByID failed: %v", err)
+		}
+		if dto != nil {
+			t.Errorf("Expected no subfunctions for invalid ID, got %v", dto.Value)
+		}
+	})
+}
